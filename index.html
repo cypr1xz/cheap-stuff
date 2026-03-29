@@ -129,6 +129,7 @@
         }
 
         .buy-btn:hover { background: var(--accent); color: white; transform: scale(1.02); }
+        .buy-btn:disabled { background-color: #333; color: #777; cursor: not-allowed; }
 
         /* Slide-in Drawer */
         .drawer {
@@ -144,6 +145,7 @@
             padding: 50px 40px;
             box-sizing: border-box;
             border-left: 1px solid var(--border);
+            overflow-y: auto; /* Allow scrolling within the drawer */
         }
 
         .drawer.active { right: 0; }
@@ -175,6 +177,23 @@
         }
 
         input:focus { border-color: var(--accent); }
+
+        .payment-instructions {
+            text-align: left;
+            font-size: 0.9rem;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #1a1a1f;
+            border-radius: 10px;
+        }
+
+        .price-explanation {
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
 
         .ltc-box {
             background: #000;
@@ -233,10 +252,22 @@
 
         <div id="step2" class="checkout-step">
             <h2>LTC Payment</h2>
-            <p style="color:#888">Click the address to copy it:</p>
+            
+            <div class="payment-instructions">
+                <div class="price-explanation">Payment Amount: $<span id="currentPrice"></span> USD</div>
+                This product is priced in US Dollars. To complete your purchase, you must send the equivalent amount in Litecoin (LTC) to the address below.
+                <br><br>
+                Please use a trusted crypto converter to find the current LTC value. Ensure you send the correct amount to avoid delays.
+            </div>
+
+            <p style="color:#888; text-align: left;">Click the address to copy it:</p>
             <div class="ltc-box" onclick="copyAddr()">LKwkUrfjqATvHW1gMxVBr6KbRDwNiNJRrg</div>
             <p id="copyStatus" style="font-size: 0.7rem; color: var(--accent); visibility: hidden;">Copied!</p>
-            <button class="buy-btn" id="verifyBtn" onclick="simulateVerify()">I have sent the money</button>
+            
+            <label style="margin-top: 20px;">Your Transaction ID / Hash (Required to continue)</label>
+            <input type="text" id="txnID" placeholder="Enter your transaction hash" oninput="checkTxnInput()">
+            
+            <button class="buy-btn" id="verifyBtn" disabled onclick="simulateVerify()">I have sent the money</button>
         </div>
 
         <div id="step3" class="checkout-step">
@@ -263,21 +294,21 @@
         <div id="products">
             <div class="grid">
                 <div class="product-card">
-                    <img src="image_0.png" class="product-img">
+                    <img src="https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg?auto=compress&cs=tinysrgb&w=800&q=80" class="product-img">
                     <div class="product-info">
                         <h3>Discord Nitro</h3>
                         <p>1 Month Full Subscription</p>
                         <div class="price-tag">$5.50 LTC</div>
-                        <button class="buy-btn" onclick="openCheckout('Discord Nitro')">Buy Now</button>
+                        <button class="buy-btn" onclick="openCheckout('Discord Nitro', '5.50')">Buy Now</button>
                     </div>
                 </div>
                 <div class="product-card">
-                    <img src="image_1.png" class="product-img">
+                    <img src="https://images.pexels.com/photos/1761356/pexels-photo-1761356.jpeg?auto=compress&cs=tinysrgb&w=800&q=80" class="product-img">
                     <div class="product-info">
                         <h3>14x Server Boosts</h3>
                         <p>3 Months Premium Level 3</p>
                         <div class="price-tag">$12.00 LTC</div>
-                        <button class="buy-btn" onclick="openCheckout('14x Boosts')">Buy Now</button>
+                        <button class="buy-btn" onclick="openCheckout('14x Boosts', '12.00')">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -335,9 +366,10 @@
         }
 
         // Drawer
-        function openCheckout(item) {
+        function openCheckout(item, price) {
             document.getElementById('item-title').innerText = item;
             document.getElementById('hiddenProduct').value = item;
+            document.getElementById('currentPrice').innerText = price;
             document.getElementById('drawer').classList.add('active');
             document.getElementById('overlay').style.display = 'block';
         }
@@ -345,6 +377,11 @@
         function closeCheckout() {
             document.getElementById('drawer').classList.remove('active');
             document.getElementById('overlay').style.display = 'none';
+            // Clear inputs and reset state
+            document.getElementById('discUser').value = "";
+            document.getElementById('discID').value = "";
+            document.getElementById('txnID').value = "";
+            document.getElementById('verifyBtn').disabled = true;
             document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
             document.getElementById('step1').classList.add('active');
         }
@@ -377,9 +414,19 @@
             setTimeout(() => { document.getElementById('copyStatus').style.visibility = "hidden"; }, 2000);
         }
 
+        function checkTxnInput() {
+            const txnID = document.getElementById('txnID').value;
+            const verifyBtn = document.getElementById('verifyBtn');
+            verifyBtn.disabled = txnID.trim().length === 0;
+        }
+
         function simulateVerify() {
+            const txnID = document.getElementById('txnID').value;
+            if(!txnID) return; // Safeguard
+
             const btn = document.getElementById('verifyBtn');
-            btn.innerText = "Searching Blockchain...";
+            btn.innerText = "Searching Blockchain for " + txnID.substring(0, 8) + "...";
+            btn.disabled = true; 
             setTimeout(() => {
                 document.getElementById('step2').classList.remove('active');
                 document.getElementById('step3').classList.add('active');

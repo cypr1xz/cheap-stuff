@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cheap Stuff | Premium Digital</title>
+    <title>Cheap Stuff | Premium Services</title>
     <style>
         :root {
             --accent: #00d2ff;
@@ -38,7 +38,7 @@
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -48,7 +48,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .subtitle { color: #666; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 50px; }
+        .subtitle { color: #666; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 50px; }
 
         /* Tabs */
         .tab-nav {
@@ -65,7 +65,7 @@
             background: transparent;
             border: none;
             color: #888;
-            padding: 12px 40px;
+            padding: 12px 30px;
             cursor: pointer;
             border-radius: 50px;
             font-weight: 700;
@@ -75,77 +75,68 @@
         .tab-nav button.active {
             background: white;
             color: black;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
         }
 
-        /* Products Grid */
+        /* Product Cards (No Images) */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
             background: var(--glass);
             border: 1px solid var(--border);
-            border-radius: 28px;
-            overflow: hidden;
-            transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            transition: 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
 
         .product-card:hover {
-            transform: translateY(-12px);
             border-color: var(--accent);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            background: rgba(255,255,255,0.07);
+            transform: translateY(-5px);
         }
 
-        .product-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            filter: grayscale(20%) brightness(0.8);
-            transition: 0.4s;
-        }
-
-        .product-card:hover .product-img { filter: grayscale(0%) brightness(1); }
-
-        .product-info { padding: 30px; text-align: left; }
-        .price-tag { font-size: 1.8rem; font-weight: 800; margin: 15px 0; color: var(--accent); }
+        .product-card h3 { margin: 0 0 10px 0; font-size: 1.4rem; }
+        .product-card p { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        .price-tag { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
 
         .buy-btn {
             background: white;
             color: black;
             border: none;
-            padding: 16px;
-            border-radius: 14px;
+            padding: 14px;
+            border-radius: 12px;
             font-weight: 800;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
-            transition: 0.3s;
+            margin-top: 15px;
+            transition: 0.2s;
             text-transform: uppercase;
-            font-size: 0.9rem;
         }
 
-        .buy-btn:hover { background: var(--accent); color: white; transform: scale(1.02); }
-        .buy-btn:disabled { background-color: #333; color: #777; cursor: not-allowed; }
+        .buy-btn:hover { background: var(--accent); color: white; }
+        .buy-btn:disabled { background: #222; color: #555; cursor: not-allowed; }
 
         /* Slide-in Drawer */
         .drawer {
             position: fixed;
             top: 0; right: -100%;
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
             height: 100%;
             background: #0b0b0d;
             z-index: 1000;
-            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             box-shadow: -30px 0 60px rgba(0,0,0,0.8);
             padding: 50px 40px;
             box-sizing: border-box;
             border-left: 1px solid var(--border);
-            overflow-y: auto; /* Allow scrolling within the drawer */
+            overflow-y: auto;
         }
 
         .drawer.active { right: 0; }
@@ -162,65 +153,46 @@
         .checkout-step { display: none; }
         .checkout-step.active { display: block; }
 
-        label { display: block; margin-bottom: 8px; font-size: 0.8rem; color: #888; text-transform: uppercase; }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: #666; text-transform: uppercase; font-weight: bold; }
 
-        input {
+        input, textarea {
             width: 100%;
-            padding: 16px;
-            margin-bottom: 25px;
+            padding: 14px;
+            margin-bottom: 20px;
             background: #141417;
             border: 1px solid #222;
             color: white;
-            border-radius: 12px;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        input:focus { border-color: var(--accent); }
-
-        .payment-instructions {
-            text-align: left;
-            font-size: 0.9rem;
-            color: #aaa;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #1a1a1f;
             border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
         }
 
-        .price-explanation {
-            font-weight: bold;
-            color: white;
-            margin-bottom: 10px;
-        }
+        textarea { height: 100px; resize: none; }
 
         .ltc-box {
             background: #000;
-            padding: 22px;
-            border-radius: 14px;
-            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
             border: 1px dashed var(--accent);
             word-break: break-all;
-            margin: 20px 0;
+            margin: 15px 0;
             color: var(--accent);
-            font-size: 0.85rem;
             cursor: pointer;
         }
 
         .success-card {
             background: rgba(0, 210, 255, 0.05);
-            padding: 25px;
-            border-radius: 20px;
+            padding: 20px;
+            border-radius: 15px;
             border: 1px solid var(--accent);
-            line-height: 1.7;
-            text-align: center;
+            line-height: 1.6;
         }
 
         .close-drawer {
             position: absolute;
-            top: 25px; right: 25px;
-            background: none; border: none; color: #555; font-size: 2.5rem; cursor: pointer;
+            top: 20px; right: 20px;
+            background: none; border: none; color: #444; font-size: 2rem; cursor: pointer;
         }
 
         .hidden { display: none; }
@@ -235,104 +207,91 @@
         <button class="close-drawer" onclick="closeCheckout()">&times;</button>
         
         <div id="step1" class="checkout-step active">
-            <h2 id="item-title" style="font-size: 2rem;">Checkout</h2>
-            <p style="color: #666; margin-bottom: 30px;">Complete your details to proceed.</p>
-            
+            <h2 id="item-title">Checkout</h2>
             <form id="purchaseForm">
-                <input type="hidden" name="Product" id="hiddenProduct">
+                <input type="hidden" name="Type" id="hiddenType">
+                <input type="hidden" name="Item" id="hiddenItem">
+                
                 <label>Discord Username</label>
                 <input type="text" name="Discord_User" id="discUser" placeholder="e.g. destiny1xz" required>
                 
-                <label>Discord User ID</label>
-                <input type="text" name="Discord_ID" id="discID" placeholder="e.g. 123456789" required>
+                <div id="dynamicFields">
+                    <label>Discord User ID</label>
+                    <input type="text" name="Discord_ID" id="discID" placeholder="e.g. 123456789">
+                </div>
                 
-                <button type="button" class="buy-btn" id="formSubmitBtn" onclick="sendData()">Continue to Payment</button>
+                <button type="button" class="buy-btn" id="submitBtn" onclick="sendData()">Continue</button>
             </form>
         </div>
 
         <div id="step2" class="checkout-step">
             <h2>LTC Payment</h2>
+            <p style="color:#888; font-size: 0.9rem;">Send the LTC to the address below. Once sent, provide the Transaction ID.</p>
+            <div class="ltc-box" onclick="navigator.clipboard.writeText('LKwkUrfjqATvHW1gMxVBr6KbRDwNiNJRrg'); alert('Copied!')">LKwkUrfjqATvHW1gMxVBr6KbRDwNiNJRrg</div>
             
-            <div class="payment-instructions">
-                <div class="price-explanation">Payment Amount: $<span id="currentPrice"></span> USD</div>
-                This product is priced in US Dollars. To complete your purchase, you must send the equivalent amount in Litecoin (LTC) to the address below.
-                <br><br>
-                Please use a trusted crypto converter to find the current LTC value. Ensure you send the correct amount to avoid delays.
-            </div>
-
-            <p style="color:#888; text-align: left;">Click the address to copy it:</p>
-            <div class="ltc-box" onclick="copyAddr()">LKwkUrfjqATvHW1gMxVBr6KbRDwNiNJRrg</div>
-            <p id="copyStatus" style="font-size: 0.7rem; color: var(--accent); visibility: hidden;">Copied!</p>
+            <label>Transaction Hash</label>
+            <input type="text" id="txnID" placeholder="Enter Hash" oninput="document.getElementById('verifyBtn').disabled = !this.value">
             
-            <label style="margin-top: 20px;">Your Transaction ID / Hash (Required to continue)</label>
-            <input type="text" id="txnID" placeholder="Enter your transaction hash" oninput="checkTxnInput()">
-            
-            <button class="buy-btn" id="verifyBtn" disabled onclick="simulateVerify()">I have sent the money</button>
+            <button class="buy-btn" id="verifyBtn" disabled onclick="showSuccess()">I have sent the money</button>
         </div>
 
         <div id="step3" class="checkout-step">
-            <h2 style="color: var(--accent);">Request Sent! ✅</h2>
-            <div class="success-card">
-                Now that you have paid, please wait for the seller to send you a friend request.
-                <br><br>
-                <strong style="color: white">Username: destiny1xz</strong><br>
-                <strong style="color: white">Display: ysf!</strong>
-            </div>
-            <button class="buy-btn" style="margin-top: 30px;" onclick="closeCheckout()">Finish</button>
+            <h2 style="color: var(--accent);">Request Received! ✅</h2>
+            <div class="success-card" id="successMsg">
+                </div>
+            <button class="buy-btn" style="margin-top: 20px;" onclick="closeCheckout()">Close</button>
         </div>
     </div>
 
     <div class="container">
         <h1>CHEAP STUFF</h1>
-        <p class="subtitle">The Elite Digital Market</p>
+        <p class="subtitle">Digital Goods & Custom Decor</p>
 
         <div class="tab-nav">
             <button id="pBtn" class="active" onclick="show('products')">Inventory</button>
+            <button id="dBtn" onclick="show('decor')">Decor</button>
             <button id="vBtn" onclick="show('vouches')">Vouches</button>
         </div>
 
         <div id="products">
             <div class="grid">
                 <div class="product-card">
-                    <img src="https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg?auto=compress&cs=tinysrgb&w=800&q=80" class="product-img">
-                    <div class="product-info">
-                        <h3>Discord Nitro</h3>
-                        <p>1 Month Full Subscription</p>
-                        <div class="price-tag">$5.50 LTC</div>
-                        <button class="buy-btn" onclick="openCheckout('Discord Nitro', '5.50')">Buy Now</button>
-                    </div>
+                    <h3>Discord Nitro</h3>
+                    <p>1 Month Full Subscription</p>
+                    <div class="price-tag">$5.50</div>
+                    <button class="buy-btn" onclick="openCheckout('Nitro', 'Standard')">Purchase</button>
                 </div>
                 <div class="product-card">
-                    <img src="https://images.pexels.com/photos/1761356/pexels-photo-1761356.jpeg?auto=compress&cs=tinysrgb&w=800&q=80" class="product-img">
-                    <div class="product-info">
-                        <h3>14x Server Boosts</h3>
-                        <p>3 Months Premium Level 3</p>
-                        <div class="price-tag">$12.00 LTC</div>
-                        <button class="buy-btn" onclick="openCheckout('14x Boosts', '12.00')">Buy Now</button>
-                    </div>
+                    <h3>14x Server Boosts</h3>
+                    <p>Level 3 Perks for 3 Months</p>
+                    <div class="price-tag">$12.00</div>
+                    <button class="buy-btn" onclick="openCheckout('Nitro', '14x Boosts')">Purchase</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="decor" class="hidden">
+            <div class="grid">
+                <div class="product-card" style="grid-column: 1 / -1; text-align: center;">
+                    <h3>Custom Profile Decor</h3>
+                    <p>Tell me what style or theme you want, and I will quote you a price.</p>
+                    <button class="buy-btn" style="max-width: 300px;" onclick="openCheckout('Decor', 'Custom Request')">Start Custom Request</button>
                 </div>
             </div>
         </div>
 
         <div id="vouches" class="hidden">
             <div class="grid">
-                <div class="product-card" style="padding: 30px;">
-                    <p style="font-style: italic; font-size: 1.1rem;">"Legit delivery, ysf! is the goat."</p>
-                    <span style="color: var(--accent); font-weight: 700;">— zanderr</span>
-                </div>
-                <div class="product-card" style="padding: 30px;">
-                    <p style="font-style: italic; font-size: 1.1rem;">"Cheapest boosts I've found so far."</p>
-                    <span style="color: var(--accent); font-weight: 700;">— K1ng</span>
-                </div>
+                <div class="product-card"><p>"Legit seller."<br>— <b>zanderr</b></p></div>
+                <div class="product-card"><p>"Fastest Nitro ever."<br>— <b>K1ng</b></p></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Formspree Config
         const formURL = "https://formspree.io/f/xaqlejgn";
 
-        // Slow Snow
+        // Snow
         const canvas = document.getElementById('snow');
         const ctx = canvas.getContext('2d');
         let w, h, particles = [];
@@ -340,36 +299,38 @@
             w = window.innerWidth; h = window.innerHeight;
             canvas.width = w; canvas.height = h;
             particles = [];
-            for(let i=0; i<60; i++) particles.push({x: Math.random()*w, y: Math.random()*h, r: Math.random()*2+0.5, d: Math.random()*1});
+            for(let i=0; i<50; i++) particles.push({x: Math.random()*w, y: Math.random()*h, r: Math.random()*2+0.5, d: Math.random()*1});
         }
         function draw() {
-            ctx.clearRect(0,0,w,h);
-            ctx.fillStyle = "rgba(255,255,255,0.3)";
-            ctx.beginPath();
-            particles.forEach(p => {
-                ctx.moveTo(p.x, p.y);
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-            });
+            ctx.clearRect(0,0,w,h); ctx.fillStyle = "rgba(255,255,255,0.3)"; ctx.beginPath();
+            particles.forEach(p => { ctx.moveTo(p.x, p.y); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); });
             ctx.fill();
-            particles.forEach(p => { p.y += 0.35; if(p.y > h) p.y = -10, p.x = Math.random()*w; });
+            particles.forEach(p => { p.y += 0.3; if(p.y > h) p.y = -10, p.x = Math.random()*w; });
             requestAnimationFrame(draw);
         }
-        window.addEventListener('resize', init);
-        init(); draw();
+        window.addEventListener('resize', init); init(); draw();
 
         // Tabs
         function show(id) {
-            document.getElementById('products').classList.toggle('hidden', id !== 'products');
-            document.getElementById('vouches').classList.toggle('hidden', id !== 'vouches');
-            document.getElementById('pBtn').classList.toggle('active', id === 'products');
-            document.getElementById('vBtn').classList.toggle('active', id === 'vouches');
+            ['products', 'decor', 'vouches'].forEach(t => document.getElementById(t).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            ['pBtn', 'dBtn', 'vBtn'].forEach(b => document.getElementById(b).classList.remove('active'));
+            event.target.classList.add('active');
         }
 
-        // Drawer
-        function openCheckout(item, price) {
-            document.getElementById('item-title').innerText = item;
-            document.getElementById('hiddenProduct').value = item;
-            document.getElementById('currentPrice').innerText = price;
+        // Checkout Logic
+        function openCheckout(type, item) {
+            document.getElementById('hiddenType').value = type;
+            document.getElementById('hiddenItem').value = item;
+            document.getElementById('item-title').innerText = (type === 'Decor') ? 'Custom Decor Request' : item;
+            
+            const fields = document.getElementById('dynamicFields');
+            if(type === 'Decor') {
+                fields.innerHTML = `<label>Describe your Decor</label><textarea name="Decor_Description" placeholder="What theme or style are you looking for?" required></textarea>`;
+            } else {
+                fields.innerHTML = `<label>Discord User ID</label><input type="text" name="Discord_ID" id="discID" placeholder="e.g. 123456789" required>`;
+            }
+            
             document.getElementById('drawer').classList.add('active');
             document.getElementById('overlay').style.display = 'block';
         }
@@ -377,60 +338,38 @@
         function closeCheckout() {
             document.getElementById('drawer').classList.remove('active');
             document.getElementById('overlay').style.display = 'none';
-            // Clear inputs and reset state
-            document.getElementById('discUser').value = "";
-            document.getElementById('discID').value = "";
-            document.getElementById('txnID').value = "";
-            document.getElementById('verifyBtn').disabled = true;
-            document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
             document.getElementById('step1').classList.add('active');
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
         }
 
         async function sendData() {
-            const user = document.getElementById('discUser').value;
-            const id = document.getElementById('discID').value;
-            const btn = document.getElementById('formSubmitBtn');
+            const type = document.getElementById('hiddenType').value;
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Sending...";
             
-            if(!user || !id) return alert("Fill in your Discord info!");
-
-            btn.innerText = "Sending Request...";
-            btn.style.opacity = "0.5";
-
-            // Sending the data to your email via Formspree
             const formData = new FormData(document.getElementById('purchaseForm'));
-            await fetch(formURL, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
+            await fetch(formURL, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
 
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step2').classList.add('active');
+            if(type === 'Decor') {
+                showSuccess('decor');
+            } else {
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step2').classList.add('active');
+            }
+            btn.innerText = "Continue";
         }
 
-        function copyAddr() {
-            navigator.clipboard.writeText("LKwkUrfjqATvHW1gMxVBr6KbRDwNiNJRrg");
-            document.getElementById('copyStatus').style.visibility = "visible";
-            setTimeout(() => { document.getElementById('copyStatus').style.visibility = "hidden"; }, 2000);
-        }
-
-        function checkTxnInput() {
-            const txnID = document.getElementById('txnID').value;
-            const verifyBtn = document.getElementById('verifyBtn');
-            verifyBtn.disabled = txnID.trim().length === 0;
-        }
-
-        function simulateVerify() {
-            const txnID = document.getElementById('txnID').value;
-            if(!txnID) return; // Safeguard
-
-            const btn = document.getElementById('verifyBtn');
-            btn.innerText = "Searching Blockchain for " + txnID.substring(0, 8) + "...";
-            btn.disabled = true; 
-            setTimeout(() => {
-                document.getElementById('step2').classList.remove('active');
-                document.getElementById('step3').classList.add('active');
-            }, 3000);
+        function showSuccess(mode) {
+            document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step3').classList.add('active');
+            
+            const msg = document.getElementById('successMsg');
+            if(mode === 'decor') {
+                msg.innerHTML = `I have received your custom request. Please wait for the seller (<b>destiny1xz</b>) to add you. I will provide you with the price and details there!`;
+            } else {
+                msg.innerHTML = `Now that you have paid, please wait for the seller to send you a friend request.<br><br><b>User:</b> destiny1xz<br><b>Display:</b> ysf!`;
+            }
         }
     </script>
 </body>

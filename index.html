@@ -6,192 +6,168 @@
     <title>The Best Server</title>
     <style>
         :root {
-            --primary: #7289da;
-            --accent: #00f2ff;
-            --bg: #0a0a0c;
-            --text: #ffffff;
+            --primary: #5865F2; /* Discord Blue */
+            --accent: #00d9ff;
+            --bg: #0f0f13;
         }
 
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            cursor: none; /* Hide default cursor */
-        }
-
-        body {
+            width: 100%;
+            height: 100%;
             background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
+            color: white;
+            font-family: 'Inter', sans-serif, Arial;
+            overflow: hidden; /* Prevents scrollbars from breaking the vibe */
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
         }
 
         /* --- Custom Cursor --- */
         #cursor {
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             border: 2px solid var(--accent);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
             box-shadow: 0 0 15px var(--accent);
+            transition: transform 0.05s linear;
         }
 
-        /* --- Background Decoration --- */
-        .blob {
+        /* --- Background Glow --- */
+        .glow {
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            filter: blur(80px);
-            opacity: 0.2;
-            z-index: -1;
-            border-radius: 50%;
-            animation: move 10s infinite alternate;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(88, 101, 242, 0.2) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
         }
 
-        @keyframes move {
-            from { transform: translate(-20%, -20%); }
-            to { transform: translate(20%, 20%); }
-        }
-
-        /* --- Main Layout --- */
-        .container {
+        /* --- Main Card --- */
+        .main-card {
+            position: relative;
+            z-index: 10;
             text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            max-width: 600px;
-            z-index: 1;
+            border-radius: 24px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff, var(--accent));
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        p.desc {
-            color: #aaa;
-            margin-bottom: 2rem;
-        }
-
-        /* --- Button Effects --- */
-        .join-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+        .btn {
+            margin-top: 2rem;
+            padding: 16px 32px;
+            font-size: 1.1rem;
             font-weight: bold;
-            border-radius: 50px;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(114, 137, 218, 0.4);
+            color: white;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
         }
 
-        .join-btn:hover {
-            transform: scale(1.05);
-            background: #5b73c7;
-            box-shadow: 0 0 30px rgba(114, 137, 218, 0.6);
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(88, 101, 242, 0.5);
+            background: #4752c4;
         }
 
-        /* --- Infinite Passage Ticker --- */
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0;
+        /* --- Infinite Text Passage --- */
+        .ticker-container {
+            position: absolute;
+            bottom: 20px;
             width: 100%;
             overflow: hidden;
-            height: 4rem;
-            background: rgba(0,0,0,0.8);
-            border-top: 1px solid var(--accent);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ticker-text {
             display: flex;
-            align-items: center;
-        }
-
-        .ticker {
-            display: inline-block;
             white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker 30s linear infinite;
+            animation: scroll 20s linear infinite;
         }
 
-        .ticker-item {
-            display: inline-block;
-            padding: 0 2rem;
-            font-size: 1.2rem;
-            color: var(--accent);
-            font-weight: bold;
+        .ticker-text span {
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 0 40px;
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
         }
 
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
-    <div class="blob"></div>
+    <div class="glow"></div>
 
-    <div class="container">
+    <div class="main-card">
         <h1>The Best Server</h1>
-        <p class="desc">Experience the pinnacle of community, gaming, and vibes. Why join anywhere else?</p>
-        
-        <button class="join-btn" onclick="copyInvite()">GET INVITE LINK</button>
-        
-        <p id="status" style="margin-top: 15px; font-size: 0.9rem; color: var(--accent); opacity: 0;"></p>
+        <p style="color: #888;">The community you've been looking for.</p>
+        <button class="btn" onclick="copyLink()">GET DISCORD INVITE</button>
+        <p id="msg" style="margin-top: 15px; color: var(--accent); font-weight: bold; visibility: hidden;">COPIED TO CLIPBOARD!</p>
     </div>
 
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span class="ticker-item">BECAUSE WE HAVE THE BEST STAFF</span>
-            <span class="ticker-item">NO TOXICITY ALLOWED</span>
-            <span class="ticker-item">WEEKLY GIVEAWAYS</span>
-            <span class="ticker-item">THE HIGHEST QUALITY CHANNELS</span>
-            <span class="ticker-item">ACTIVE 24/7</span>
-            <span class="ticker-item">UNIQUE CUSTOM BOTS</span>
-            <span class="ticker-item">BECAUSE WE HAVE THE BEST STAFF</span>
-            <span class="ticker-item">NO TOXICITY ALLOWED</span>
-            <span class="ticker-item">WEEKLY GIVEAWAYS</span>
+    <div class="ticker-container">
+        <div class="ticker-text">
+            <span>THE BEST COMMUNITY</span>
+            <span>ACTIVE VC 24/7</span>
+            <span>CUSTOM BOTS</span>
+            <span>FRIENDLY STAFF</span>
+            <span>WEEKLY EVENTS</span>
+            <span>THE BEST COMMUNITY</span>
+            <span>ACTIVE VC 24/7</span>
+            <span>CUSTOM BOTS</span>
+            <span>FRIENDLY STAFF</span>
+            <span>WEEKLY EVENTS</span>
         </div>
     </div>
 
     <script>
-        // Custom Cursor Movement
+        // Move the custom cursor
         const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => {
+        window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Copy Link Function
-        function copyInvite() {
-            const inviteLink = "https://discord.gg/your-invite-code"; // Replace with your link
-            navigator.clipboard.writeText(inviteLink);
+        // Copy function
+        function copyLink() {
+            const link = "https://discord.gg/yourlink"; // Put your real link here
+            navigator.clipboard.writeText(link);
             
-            const status = document.getElementById('status');
-            status.innerText = "Link copied to clipboard!";
-            status.style.opacity = "1";
-            
-            setTimeout(() => {
-                status.style.opacity = "0";
-            }, 2000);
+            const msg = document.getElementById('msg');
+            msg.style.visibility = 'visible';
+            setTimeout(() => { msg.style.visibility = 'hidden'; }, 2000);
         }
     </script>
 </body>
